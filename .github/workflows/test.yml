@@ -24,6 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # ⬇️ Додаємо цей крок!
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
       - name: Run UI Tests
         run: npm run test:ui
 
@@ -33,5 +37,4 @@ jobs:
       - name: Generate Allure Report
         run: |
           npx allure generate allure-results --clean
-          npx allure open
         if: always()
