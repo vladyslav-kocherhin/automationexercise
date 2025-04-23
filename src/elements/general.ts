@@ -3,19 +3,32 @@ import { Locator, Page } from '@playwright/test';
 export class General {
     public constructor(private readonly page: Page) {}
 
-    public async scrollPageToBottom(): Promise<void> {
-        await this.page.evaluate(() => {
-            window.scrollTo(0, document.body.scrollHeight);
-        });
+    public get accountDeletedMessage(): Locator {
+        return this.page.locator('b:has-text("Account Deleted!")');
     }
 
-    public get backToTopButton(): Locator {
-        return this.page.locator('button[plerdy-tracking-id="30620250601"]');
+    public get sliderSection(): Locator {
+        return this.page.locator('#slider');
     }
 
-    public async isPageAtTop(): Promise<boolean> {
-        const scrollY = await this.page.evaluate(() => window.scrollY);
-        return scrollY === 0;
+    public get categoryFilter(): Locator {
+        return this.page.locator('#accordian');
+    }
+
+    public get futureItemsSections(): Locator {
+        return this.page.locator('div.features_items');
+    }
+
+    public get brandsSections(): Locator {
+        return this.page.locator('div.brands_products');
+    }
+
+    public get recommendedItemsSections(): Locator {
+        return this.page.locator('div.recommended_items');
+    }
+
+    public get Footer(): Locator {
+        return this.page.locator('#footer');
     }
 
 }
