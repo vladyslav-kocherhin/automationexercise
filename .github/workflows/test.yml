@@ -1,0 +1,40 @@
+name: Run UI and API Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ⬇️ Додаємо цей крок!
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: Run UI Tests
+        run: npm run test:ui
+
+      - name: Run API Tests
+        run: npm run test:api
+
+      - name: Generate Allure Report
+        run: |
+          npx allure generate allure-results --clean
+        if: always()
